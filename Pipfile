@@ -1,0 +1,12 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+[packages]
+gd2score = { git = 'https://github.com/brewerja/gd2score.git', ref = 'master' }
+
+[requires]
+python_version = "3.6"

@@ -1,0 +1,38 @@
+g.runner {
+    stroke: gray;
+    fill: gray;
+}
+
+g.to-score {
+    stroke: black;
+    fill: black;
+    stroke-width: 1.5;
+}
+
+rect {
+    fill: none;
+}
+
+.team-box, .pitcher-hash {
+    stroke: gray;
+    stroke-width: 0.4;
+}
+
+text {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+text.out {
+    fill: red;
+}
+
+text.on-base {
+    fill: green;
+    font-weight: bold;
+}
+
+text.error {
+    fill: orange;
+}
+
