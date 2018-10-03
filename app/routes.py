@@ -1,3 +1,5 @@
+import urllib
+
 from flask import render_template, Markup, abort
 from app import app
 
@@ -17,7 +19,7 @@ def game(gid):
     try:
         game = game_builder.build(gid)
         svg = draw_scorecard.draw(game).tostring()
-    except ValueError:
+    except (ValueError, urllib.error.HTTPError):
         return abort(404)
     return render_template('game.html', svg=Markup(svg))
 
