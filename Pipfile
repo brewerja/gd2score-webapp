@@ -4,13 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+"python-dotenv" = "*"
 
 [packages]
-
 "gd2score" = { git = 'https://github.com/brewerja/gd2score.git', ref = 'master' }
 flask = "*"
 gunicorn = "*"
-
 
 [requires]
 python_version = "3.6"
