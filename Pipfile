@@ -6,7 +6,9 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-gd2score = { git = 'https://github.com/brewerja/gd2score.git', ref = 'master' }
+"gd2score" = { git = 'https://github.com/brewerja/gd2score.git', ref = 'master' }
+flask = "*"
+
 
 [requires]
 python_version = "3.6"
