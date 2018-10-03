@@ -1,4 +1,4 @@
-from flask import render_template, Markup
+from flask import render_template, Markup, abort
 from app import app
 
 import gd2score
@@ -8,18 +8,25 @@ draw_scorecard = gd2score.DrawScorecard()
 
 
 @app.route('/')
-@app.route('/index')
-def index():
-    game = game_builder.build('gid_2018_03_29_phimlb_atlmlb_1')
-    svg = draw_scorecard.draw(game).tostring()
-    return render_template('test.html', svg=Markup(svg))
+def index(gid=None):
+    return render_template('index.html')
+
+
+@app.route('/<gid>')
+def game(gid):
+    try:
+        game = game_builder.build(gid)
+        svg = draw_scorecard.draw(game).tostring()
+    except ValueError:
+        return abort(404)
+    return render_template('game.html', svg=Markup(svg))
 
 
 @app.errorhandler(404)
 def not_found(error):
-    return render_template('index.html')
+    return render_template('404.html'), 404
 
 
 @app.errorhandler(500)
-def not_found(error):
-    return render_template('index.html')
+def internal_error(error):
+    return render_template('500.html'), 500
