@@ -15,7 +15,7 @@ function setSVGHeight() {
 }
 
 function getNamesY(side) {
-    return getNames(side).map(name => name.y.baseVal[0].value + name.getBBox().width / 2)
+    return getNames(side).map(name => getY(name) + name.getBBox().width / 2)
 }
 
 function getNames(side) {
@@ -46,16 +46,16 @@ function getHashes(side) {
 }
 
 function isNameWiderThanAdjacentHashMarks(name, hash) {
-    const BUFFER = 10
-    return name.y.baseVal[0].value - name.getBBox().width / 2 - BUFFER < hash.y1.baseVal.value
+    const BUFFER = 5
+    return getY(name) - name.getBBox().width / 2 - BUFFER < hash.y1.baseVal.value
 }
 
 function getNewX(names, i, side) {
     const shift = (side === 'home' ? 15 : -15)
-    let nameX = names[i].x.baseVal[0].value + shift
+    let nameX = getX(names[i]) + shift
     for (let j = 0; j < i; j++) {
         const pName = names[j]
-        const xCollide = nameX === pName.x.baseVal[0].value
+        const xCollide = nameX === getX(pName)
         const yCollide = getBottom(pName) > getTop(names[i])
 
         if (xCollide && yCollide)
@@ -65,23 +65,30 @@ function getNewX(names, i, side) {
 }
 
 function getTop(obj) {
-    return obj.y.baseVal[0].value - obj.getBBox().width / 2
+    return getY(obj) - obj.getBBox().width / 2
 }
 
 function getBottom(obj) {
-    return obj.y.baseVal[0].value + obj.getBBox().width / 2
+    return getY(obj) + obj.getBBox().width / 2
+}
+
+function getY(text) {
+    return text.y.baseVal[0].value
+}
+
+function getX(text) {
+    return text.x.baseVal[0].value
 }
 
 function shiftName(name, side, newX) {
     $(name).attr('x', newX)
     const rotation = (side === 'home' ? '90' : '-90')
-    const y = name.y.baseVal[0].value
-    $(name).attr('transform', 'rotate(' + rotation + ',' + newX + ',' + y + ')')
+    $(name).attr('transform', 'rotate(' + rotation + ',' + newX + ',' + getY(name) + ')')
 }
 
 function isGapWideEnoughToDrawLines(name, hash) {
     const BUFFER = 10 
-    return name.y.baseVal[0].value - name.getBBox().width / 2 - hash.y1.baseVal.value > BUFFER
+    return getY(name) - name.getBBox().width / 2 - hash.y1.baseVal.value > BUFFER
 }
 
 function drawLinesBetweenHashes(name, hashes, i, side) {
@@ -94,9 +101,9 @@ function drawLinesBetweenHashes(name, hashes, i, side) {
     const BUFFER = 5
     const nameBox = name.getBBox()
     const y1 = hashes[i].y1.baseVal.value
-    const y2 = name.y.baseVal[0].value - nameBox.width / 2 - BUFFER
+    const y2 = getY(name) - nameBox.width / 2 - BUFFER
     appendLine(x, y1, x, y2, transform, 'team-box')
-    const y3 = name.y.baseVal[0].value + nameBox.width / 2 + BUFFER
+    const y3 = getY(name) + nameBox.width / 2 + BUFFER
     const y4 = hashes[i + 1].y1.baseVal.value
     appendLine(x, y3, x, y4, transform, 'team-box')
 }
