@@ -1,7 +1,22 @@
-<html>
-    <head><title>{{ title }}</title></head>
+<!doctype html>
+    <head>
+        <title>Scorecard</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/static/helper.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+    </head>
     <body>
-        <h1>gd2score</h1>
+        <form>
+            <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
+            <select id="games"></select>
+            <input id="view" type="button" value="View Scorecard"/>
+        </form>
+
+        <div id="scorecard">{{ svg }}</div>
     </body>
 </html>
-

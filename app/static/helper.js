@@ -1,7 +1,7 @@
 /* global $:false window:false document:false */
 
 $(window).on('load', () => {
-  const [svg] = $('svg');
+  let svg;
 
   function getX(text) {
     return text.x.baseVal[0].value;
@@ -111,7 +111,47 @@ $(window).on('load', () => {
     $(svg).attr('height', Math.max(boxHeight, maxNameY) + Y_BUFFER);
   }
 
-  setSVGHeight();
-  adjustPitcherNames('home');
-  adjustPitcherNames('away');
+  function finalizeDrawing() {
+    [svg] = $('#scorecard').find('svg');
+    if (svg) {
+      setSVGHeight();
+      adjustPitcherNames('home');
+      adjustPitcherNames('away');
+    }
+  }
+
+  function getGames(dateStr) {
+    $.getJSON(`games/${dateStr}`, (data) => {
+      const dropdown = $('#games');
+      dropdown.children().remove();
+      $.each(data.games, (i, gid) => {
+        dropdown.append($('<option />').val(gid).text(gid));
+      });
+    });
+  }
+
+  function getGame(gid) {
+    $.getJSON(`svg/${gid}`, (data) => {
+      $('#scorecard').html(data.svg);
+      finalizeDrawing();
+    });
+  }
+
+  $('.flatpickr').flatpickr({
+    defaultDate: 'today',
+    altInput: true,
+    altFormat: 'F j, Y',
+    maxDate: 'today',
+    onChange(selectedDates, dateStr) {
+      getGames(dateStr);
+    },
+  });
+
+  $('#view').click(() => {
+    const gid = $('#games').val();
+    getGame(gid);
+  });
+
+  getGames($('.flatpickr')[0].value);
+  finalizeDrawing();
 });
