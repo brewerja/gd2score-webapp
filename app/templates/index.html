@@ -9,11 +9,19 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <link rel="stylesheet" type="text/css" href="/static/style.css">
         <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+        <script>
+            var selectedDate = '{{ date }}';
+            var currentGame = '{{ currentGame }}';
+        </script>
     </head>
     <body>
         <form>
             <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
-            <select id="games"></select>
+            <select id="games">
+                {% for key, value in games.items() %}
+                <option value="{{ key }}">{{ value }}</option>
+                {% endfor %}
+            </select>
             <input id="view" type="button" value="View Scorecard"/>
         </form>
 

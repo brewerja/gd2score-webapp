@@ -1,5 +1,6 @@
-/* global $:false window:false document:false */
+/* global $:false window:false document:false history:false */
 
+let datepicker;
 $(window).on('load', () => {
   let svg;
 
@@ -120,13 +121,19 @@ $(window).on('load', () => {
     }
   }
 
-  function getGames(dateStr) {
+  let gamesOptions;
+  function populateDropdown(games) {
+    const dropdown = $('#games');
+    dropdown.children().remove();
+    gamesOptions = games;
+    $.each(games, (gid, awayAtHome) => {
+      dropdown.append($('<option />').val(gid).text(awayAtHome));
+    });
+  }
+
+  function setGamesDropdown(dateStr) {
     $.getJSON(`games/${dateStr}`, (data) => {
-      const dropdown = $('#games');
-      dropdown.children().remove();
-      $.each(data.games, (i, gid) => {
-        dropdown.append($('<option />').val(gid).text(gid));
-      });
+      populateDropdown(data.games);
     });
   }
 
@@ -137,21 +144,41 @@ $(window).on('load', () => {
     });
   }
 
-  $('.flatpickr').flatpickr({
+  function getSelectedDate() {
+    return datepicker.element.value;
+  }
+
+  datepicker = $('.flatpickr').flatpickr({
     defaultDate: 'today',
     altInput: true,
     altFormat: 'F j, Y',
     maxDate: 'today',
     onChange(selectedDates, dateStr) {
-      getGames(dateStr);
+      setGamesDropdown(dateStr);
     },
   });
 
   $('#view').click(() => {
     const gid = $('#games').val();
     getGame(gid);
+    const stateObj = { gid, date: getSelectedDate(), games: gamesOptions };
+    history.pushState(stateObj, null, gid);
   });
 
-  getGames($('.flatpickr')[0].value);
+  window.addEventListener('popstate', (e) => {
+    if (e.state === null) {
+      $('#scorecard').html('');
+    } else if (e.state.games === undefined) {
+      setGamesDropdown(getSelectedDate());
+    } else {
+      populateDropdown(e.state.games);
+      getGame(e.state.gid);
+      $('#games').val(e.state.gid);
+      datepicker.setDate(e.state.date);
+    }
+  });
+
+  if (selectedDate) datepicker.setDate(selectedDate);
+  if (currentGame) $('#games').val(currentGame);
   finalizeDrawing();
 });
