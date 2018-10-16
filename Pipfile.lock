@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "85ff48cf2befd2fd995af17127c4c0b9549736ae19eb3d46ad7a4b5535d008aa"
+            "sha256": "da3f96a0ffa4e5f9f738277641d63de4a87b56079b1ad73c8b1dd7ed4b647a4a"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -50,6 +50,12 @@
                 "sha256:2271c0070dbcb5275fad4a82e29f23ab92682dc45f9dfbc22c02ba9b9322ce48"
             ],
             "version": "==1.0.2"
+        },
+        "flask-compress": {
+            "hashes": [
+                "sha256:468693f4ddd11ac6a41bca4eb5f94b071b763256d54136f77957cfee635badb3"
+            ],
+            "version": "==1.4.0"
         },
         "flask-sslify": {
             "hashes": [

@@ -11,6 +11,7 @@ name = "pypi"
 gunicorn = "*"
 flask = "*"
 "flask-sslify" = "*"
+"flask-compress" = "*"
 
 [requires]
 python_version = "3.6"
