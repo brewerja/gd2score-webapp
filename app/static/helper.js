@@ -120,11 +120,15 @@ $(window).on('load', () => {
     }
   }
 
-  let gamesOptions;
+  function getOptions() {
+    const options = {};
+    $.map($('#games option'), (e) => { options[e.value] = e.text; });
+    return options;
+  }
+
   function populateDropdown(games) {
     const dropdown = $('#games');
     dropdown.children().remove();
-    gamesOptions = games;
     $.each(games, (gid, awayAtHome) => {
       dropdown.append($('<option />').val(gid).text(awayAtHome));
     });
@@ -158,8 +162,8 @@ $(window).on('load', () => {
   }
 
   function initForm() {
-    const selectedDate = $('form').data('date');
-    if (selectedDate) datepicker.setDate(selectedDate);
+    const date = $('form').data('date');
+    if (date) datepicker.setDate(date);
 
     const currentGame = $('form').data('current-game');
     if (currentGame) {
@@ -171,14 +175,14 @@ $(window).on('load', () => {
   $('#view').click(() => {
     const gid = $('#games').val();
     getGame(gid);
-    const stateObj = { gid, date: getSelectedDate(), games: gamesOptions };
+    const stateObj = { gid, date: getSelectedDate(), games: getOptions() };
     window.history.pushState(stateObj, null, gid);
   });
 
   window.addEventListener('popstate', (e) => {
     if (e.state === null) {
       $('#scorecard').html('');
-    } else if (e.state.games === undefined) {
+      initForm();
       setGamesDropdown(getSelectedDate());
     } else {
       populateDropdown(e.state.games);
