@@ -7,9 +7,10 @@ name = "pypi"
 "python-dotenv" = "*"
 
 [packages]
-"gd2score" = { git = "https://github.com/brewerja/gd2score.git", ref = "master", editable = "true" }
+"gd2score" = {ref = "master", git = "https://github.com/brewerja/gd2score.git", editable = true}
 gunicorn = "*"
 flask = "*"
+"flask-sslify" = "*"
 
 [requires]
 python_version = "3.6"
