@@ -48,10 +48,9 @@ def svg(gid):
     return jsonify({'svg': svg})
 
 
-@app.route('/games/<year>-<month>-<day>')
+@app.route('/games/<int:year>-<int:month>-<int:day>')
 def get_games(year, month, day):
-    d = {'games': gd2score.get_games(int(year), int(month), int(day))}
-    return jsonify(d)
+    return jsonify(gd2score.get_games(year, month, day))
 
 
 @app.errorhandler(404)

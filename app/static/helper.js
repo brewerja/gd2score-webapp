@@ -132,8 +132,8 @@ $(window).on('load', () => {
   }
 
   function setGamesDropdown(dateStr) {
-    $.getJSON(`games/${dateStr}`, (data) => {
-      populateDropdown(data.games);
+    $.getJSON(`games/${dateStr}`, (games) => {
+      populateDropdown(games);
     });
   }
 
