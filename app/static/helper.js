@@ -1,6 +1,5 @@
-/* global $:false window:false document:false history:false */
+/* global $:false window:false document:false */
 
-let datepicker;
 $(window).on('load', () => {
   let svg;
 
@@ -144,11 +143,7 @@ $(window).on('load', () => {
     });
   }
 
-  function getSelectedDate() {
-    return datepicker.element.value;
-  }
-
-  datepicker = $('.flatpickr').flatpickr({
+  const datepicker = $('.flatpickr').flatpickr({
     defaultDate: 'today',
     altInput: true,
     altFormat: 'F j, Y',
@@ -158,11 +153,26 @@ $(window).on('load', () => {
     },
   });
 
+  function getSelectedDate() {
+    return datepicker.element.value;
+  }
+
+  function initForm() {
+    const selectedDate = $('form').data('date');
+    if (selectedDate) datepicker.setDate(selectedDate);
+
+    const currentGame = $('form').data('current-game');
+    if (currentGame) {
+      $('#games').val(currentGame);
+      getGame(currentGame);
+    }
+  }
+
   $('#view').click(() => {
     const gid = $('#games').val();
     getGame(gid);
     const stateObj = { gid, date: getSelectedDate(), games: gamesOptions };
-    history.pushState(stateObj, null, gid);
+    window.history.pushState(stateObj, null, gid);
   });
 
   window.addEventListener('popstate', (e) => {
@@ -178,7 +188,5 @@ $(window).on('load', () => {
     }
   });
 
-  if (selectedDate) datepicker.setDate(selectedDate);
-  if (currentGame) $('#games').val(currentGame);
-  finalizeDrawing();
+  initForm();
 });

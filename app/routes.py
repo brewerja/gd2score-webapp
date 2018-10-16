@@ -12,36 +12,28 @@ draw_scorecard = gd2score.DrawScorecard()
 
 
 @app.route('/')
-@app.route('/<gid>')
-def index(gid=None):
-    if gid:
-        try:
-            m = re.match(gd2score.GID_REGEX, gid)
-            if m:
-                year = int(m.group('year'))
-                month = int(m.group('month'))
-                day = int(m.group('day'))
-                games = gd2score.get_games(year, month, day)
-                game = game_builder.build(gid)
-                svg = draw_scorecard.draw(game).tostring()
-                date = '%d-%d-%d' % (year, month, day)
-                return render_template('index.html', svg=Markup(svg),
-                                       games=games, date=date, currentGame=gid)
-            else:
-                return abort(404)
-        except (ValueError, urllib.error.HTTPError):
-            return abort(404)
-    else:
-        d = datetime.datetime.now()
+def index():
+    d = datetime.datetime.now()
+    games = gd2score.get_games(d.year, d.month, d.day)
+    while not games:
+        d = d - datetime.timedelta(days=1)
         games = gd2score.get_games(d.year, d.month, d.day)
-        while not games:
-            d = d - datetime.timedelta(days=1)
-            games = gd2score.get_games(d.year, d.month, d.day)
-        date = '%d-%d-%d' % (d.year, d.month, d.day)
-        return render_template('index.html', games=games, date=date)
+    return render_template('index.html', games=games,
+                           date='%d-%d-%d' % (d.year, d.month, d.day))
 
 
-@app.route('/svg/<gid>')
+@app.route('/<string:gid>')
+def get_game(gid=None):
+    try:
+        year, month, day = gd2score.parse_gid_for_date(gid)
+        games = gd2score.get_games(year, month, day)
+        return render_template('index.html', date=f'{year}-{month}-{day}',
+                               games=games, current_game=gid)
+    except (ValueError, urllib.error.HTTPError):
+        return abort(404)
+
+
+@app.route('/svg/<string:gid>')
 def svg(gid):
     game = game_builder.build(gid)
     svg = draw_scorecard.draw(game).tostring()
