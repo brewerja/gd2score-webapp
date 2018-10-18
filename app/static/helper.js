@@ -124,28 +124,58 @@ $(window).on('load', () => {
   function getOptions() {
     const options = {};
     $.map($('#games option'), (e) => { options[e.value] = e.text; });
+    delete options.placeholder;
     return options;
+  }
+
+  function getPlaceholderText(games) {
+    const numGames = Object.keys(games).length;
+    if (numGames === 0) {
+      return 'No Games';
+    } if (numGames === 1) {
+      return '1 Game';
+    }
+    return `${numGames} Games`;
   }
 
   function populateDropdown(games) {
     const dropdown = $('#games');
     dropdown.children().remove();
+
+    dropdown.append($('<option />')
+      .val('placeholder')
+      .text(getPlaceholderText(games))
+      .prop('selected', true)
+      .prop('disabled', true)
+      .prop('hidden', true));
     $.each(games, (gid, awayAtHome) => {
       dropdown.append($('<option />').val(gid).text(awayAtHome));
     });
   }
 
-  function setGamesDropdown(dateStr) {
+  function setGamesDropdown(dateStr, callback) {
     $.getJSON(`games/${dateStr}`, (games) => {
       populateDropdown(games);
+      if (callback !== undefined) callback();
     });
   }
 
   function getGame(gid) {
+    $('#scorecard').html('');
     $.getJSON(`svg/${gid}`, (data) => {
       $('#scorecard').html(data.svg);
       finalizeDrawing();
     });
+  }
+
+  function disableForm() {
+    $('.flatpicker').prop('disabled', true);
+    $('#games').prop('disabled', true);
+  }
+
+  function enableForm() {
+    $('.flatpicker').prop('disabled', false);
+    $('#games').prop('disabled', false);
   }
 
   const datepicker = $('.flatpickr').flatpickr({
@@ -154,7 +184,9 @@ $(window).on('load', () => {
     altFormat: 'F j, Y',
     maxDate: 'today',
     onChange(selectedDates, dateStr) {
+      disableForm();
       setGamesDropdown(dateStr);
+      enableForm();
     },
   });
 
@@ -162,18 +194,23 @@ $(window).on('load', () => {
     return datepicker.element.value;
   }
 
-  function initForm() {
+  function initDate() {
     const date = $('form').data('date');
     if (date) datepicker.setDate(date);
+  }
 
+  function initGame() {
     const currentGame = $('form').data('current-game');
     if (currentGame) {
       $('#games').val(currentGame);
       getGame(currentGame);
+    } else {
+      $('#games').val('placeholder');
+      $('#scorecard').html('');
     }
   }
 
-  $('#view').click(() => {
+  $('#games').change(() => {
     const gid = $('#games').val();
     getGame(gid);
     const stateObj = { gid, date: getSelectedDate(), games: getOptions() };
@@ -182,16 +219,16 @@ $(window).on('load', () => {
 
   window.addEventListener('popstate', (e) => {
     if (e.state === null) {
-      $('#scorecard').html('');
-      initForm();
-      setGamesDropdown(getSelectedDate());
+      initDate();
+      setGamesDropdown(getSelectedDate(), initGame);
     } else {
-      populateDropdown(e.state.games);
-      getGame(e.state.gid);
-      $('#games').val(e.state.gid);
       datepicker.setDate(e.state.date);
+      populateDropdown(e.state.games);
+      $('#games').val(e.state.gid);
+      getGame(e.state.gid);
     }
   });
 
-  initForm();
+  initDate();
+  initGame();
 });
