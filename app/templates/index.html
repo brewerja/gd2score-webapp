@@ -8,6 +8,7 @@
         <script type="text/javascript" src="/static/helper.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/static/style.css">
         <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
     </head>
@@ -20,6 +21,7 @@
                 <option value="{{ key }}">{{ value }}</option>
                 {% endfor %}
             </select>
+            <button id="refresh-button" title="Refresh Game" hidden type="button"><i class="fas fa-sync-alt"></i></button>
         </form>
 
         <div id="scorecard">{{ svg }}</div>

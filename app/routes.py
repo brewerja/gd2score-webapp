@@ -37,7 +37,7 @@ def get_game(gid=None):
 def svg(gid):
     game = game_builder.build(gid)
     svg = draw_scorecard.draw(game).tostring()
-    return jsonify({'svg': svg})
+    return jsonify({'svg': svg, 'inProgress': game.in_progress})
 
 
 @app.route('/games/<int:year>-<int:month>-<int:day>')

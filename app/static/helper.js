@@ -161,10 +161,14 @@ $(window).on('load', () => {
   }
 
   function getGame(gid) {
-    $('#scorecard').html('');
     $.getJSON(`svg/${gid}`, (data) => {
       $('#scorecard').html(data.svg);
       finalizeDrawing();
+      if (data.inProgress) {
+        $('#refresh-button').attr('hidden', false);
+      } else {
+        $('#refresh-button').attr('hidden', true);
+      }
     });
   }
 
@@ -184,6 +188,7 @@ $(window).on('load', () => {
     altFormat: 'F j, Y',
     maxDate: 'today',
     onChange(selectedDates, dateStr) {
+      $('#refresh-button').attr('hidden', true);
       disableForm();
       setGamesDropdown(dateStr);
       enableForm();
@@ -212,9 +217,14 @@ $(window).on('load', () => {
 
   $('#games').change(() => {
     const gid = $('#games').val();
+    $('#scorecard').html('');
     getGame(gid);
     const stateObj = { gid, date: getSelectedDate(), games: getOptions() };
     window.history.pushState(stateObj, null, gid);
+  });
+
+  $('#refresh-button').click(() => {
+    getGame($('#games').val());
   });
 
   window.addEventListener('popstate', (e) => {
@@ -225,6 +235,7 @@ $(window).on('load', () => {
       datepicker.setDate(e.state.date);
       populateDropdown(e.state.games);
       $('#games').val(e.state.gid);
+      $('#scorecard').html('');
       getGame(e.state.gid);
     }
   });
