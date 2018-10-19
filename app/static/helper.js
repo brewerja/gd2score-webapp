@@ -175,11 +175,13 @@ $(window).on('load', () => {
   function disableForm() {
     $('.flatpicker').prop('disabled', true);
     $('#games').prop('disabled', true);
+    $('#refresh-button').attr('disabled', true);
   }
 
   function enableForm() {
     $('.flatpicker').prop('disabled', false);
     $('#games').prop('disabled', false);
+    $('#refresh-button').attr('disabled', false);
   }
 
   const datepicker = $('.flatpickr').flatpickr({
@@ -224,7 +226,9 @@ $(window).on('load', () => {
   });
 
   $('#refresh-button').click(() => {
+    disableForm();
     getGame($('#games').val());
+    enableForm();
   });
 
   window.addEventListener('popstate', (e) => {
