@@ -2,6 +2,10 @@ input.flatpickr {
     text-align: center;
 }
 
+div#content {
+    text-align: center;
+}
+
 svg {
     width: 100%;
     height: auto;
@@ -9,6 +13,7 @@ svg {
 
 #scorecard {
     max-width: 600px;
+    margin: 0 auto;
 }
 
 g.runner {

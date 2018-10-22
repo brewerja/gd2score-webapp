@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
     </head>
     <body>
+        <div id="content">
         <form data-current-game="{{ current_game }}" data-date="{{ date }}">
             <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
             <select id="games">
@@ -24,5 +25,6 @@
         </form>
 
         <div id="scorecard">{{ svg }}</div>
+        </div>
     </body>
 </html>
