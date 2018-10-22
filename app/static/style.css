@@ -41,6 +41,10 @@ text {
     font-size: 10pt;
 }
 
+text.score {
+    font-size: 20pt;
+}
+
 text.out {
     fill: red;
 }
