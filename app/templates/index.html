@@ -16,7 +16,6 @@
         <form data-current-game="{{ current_game }}" data-date="{{ date }}">
             <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
             <select id="games">
-                <option value="placeholder" disabled selected hidden>{{ games|length }} Games</option>
                 {% for key, value in games.items() %}
                 <option value="{{ key }}">{{ value }}</option>
                 {% endfor %}
