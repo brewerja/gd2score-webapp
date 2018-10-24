@@ -105,11 +105,12 @@ $(window).on('load', () => {
   }
 
   function setSVGHeight() {
+    const Y_BUFFER = 10;
     const awayRect = $(svg).find('#away_team').find('rect')[0];
     const boxTopY = awayRect.y.baseVal.value
     const boxHeight = awayRect.height.baseVal.value;
     const maxNameY = Math.max(...getNamesY('home').concat(getNamesY('away')));
-    const totalHt = Math.max(boxHeight, maxNameY) + boxTopY;
+    const totalHt = Math.max(boxHeight, maxNameY) + boxTopY + Y_BUFFER;
     $(svg).attr('viewBox', `0 0 600 ${totalHt}`);
   }
 
