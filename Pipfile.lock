@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "52d73c56986f5341414b5299236ef418c45b2fdd61c6187c2afc2d4e5431b33e"
+            "sha256": "f0a1f76753d25c1a3820567566a14354779db1c475e291183d52c6f2ee917554"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -72,7 +72,7 @@
         "gd2score": {
             "editable": true,
             "git": "https://github.com/brewerja/gd2score.git",
-            "ref": "printing"
+            "ref": "master"
         },
         "gunicorn": {
             "hashes": [

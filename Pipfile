@@ -7,7 +7,7 @@ name = "pypi"
 "python-dotenv" = "*"
 
 [packages]
-"gd2score" = {ref = "printing", git = "https://github.com/brewerja/gd2score.git", editable = true}
+"gd2score" = {ref = "master", git = "https://github.com/brewerja/gd2score.git", editable = true}
 gunicorn = "*"
 flask = "*"
 MLB-statsapi = "*"
