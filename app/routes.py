@@ -2,6 +2,7 @@ import re
 import urllib
 import datetime
 
+import statsapi
 from flask import render_template, Markup, abort, jsonify
 from app import app
 
@@ -11,13 +12,22 @@ game_builder = gd2score.GameBuilder()
 draw_scorecard = gd2score.DrawScorecard()
 
 
+def lookup_games(d):
+    games_dict = {}
+    games = statsapi.schedule(date='%d/%d/%d' % (d.month, d.day, d.year))
+    for game in games:
+        games_dict[game['game_id']] = '%s @ %s' % (game['away_name'],
+                                                   game['home_name'])
+    return games_dict
+
+
 @app.route('/')
 def index():
     d = datetime.datetime.now()
-    games = gd2score.get_games(d.year, d.month, d.day)
+    games = lookup_games(d)
     while not games:
         d = d - datetime.timedelta(days=1)
-        games = gd2score.get_games(d.year, d.month, d.day)
+        games = lookup_games(d)
     return render_template('index.html', games=games,
                            date='%d-%d-%d' % (d.year, d.month, d.day))
 
@@ -25,9 +35,11 @@ def index():
 @app.route('/<string:gid>')
 def get_game(gid=None):
     try:
-        year, month, day = gd2score.parse_gid_for_date(gid)
-        games = gd2score.get_games(year, month, day)
-        return render_template('index.html', date=f'{year}-{month}-{day}',
+        date_str = statsapi.schedule(game_id=gid)[0]['game_date']
+        date = datetime.date.fromisoformat(date_str)
+        games = lookup_games(date)
+        return render_template('index.html',
+                               date=f'{date.year}-{date.month}-{date.day}',
                                games=games, current_game=gid)
     except (ValueError, urllib.error.HTTPError):
         return abort(404)
@@ -42,7 +54,7 @@ def svg(gid):
 
 @app.route('/games/<int:year>-<int:month>-<int:day>')
 def get_games(year, month, day):
-    return jsonify(gd2score.get_games(year, month, day))
+    return jsonify(lookup_games(datetime.date(year, month, day)))
 
 
 @app.errorhandler(404)

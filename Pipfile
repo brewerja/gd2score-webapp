@@ -10,8 +10,9 @@ name = "pypi"
 "gd2score" = {ref = "master", git = "https://github.com/brewerja/gd2score.git", editable = true}
 gunicorn = "*"
 flask = "*"
+MLB-statsapi = "*"
 "flask-sslify" = "*"
 "flask-compress" = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"
