@@ -1,9 +1,10 @@
+import os
 import re
 import urllib
 import datetime
 
 import statsapi
-from flask import render_template, Markup, abort, jsonify
+from flask import render_template, Markup, abort, jsonify, send_from_directory
 from app import app
 
 import gd2score
@@ -56,6 +57,10 @@ def svg(gid):
 def get_games(year, month, day):
     return jsonify(lookup_games(datetime.date(year, month, day)))
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+            'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.errorhandler(404)
 def not_found(error):
