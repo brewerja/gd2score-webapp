@@ -60,6 +60,7 @@ text.out {
 text.on-base {
     fill: green;
     font-weight: bold;
+    font-style: italic;
 }
 
 text.error {
