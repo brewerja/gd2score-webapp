@@ -27,6 +27,10 @@ g.to-score {
     stroke-width: 1.5;
 }
 
+g.out {
+    stroke: red;
+}
+
 rect {
     fill: none;
 }
