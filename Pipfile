@@ -4,15 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-"python-dotenv" = "*"
+python-dotenv = "*"
 
 [packages]
 "gd2score" = {ref = "master", git = "https://github.com/brewerja/gd2score.git", editable = true}
 gunicorn = "*"
 flask = "*"
 MLB-statsapi = "*"
-"flask-sslify" = "*"
-"flask-compress" = "*"
+flask-sslify = "*"
+flask-compress = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.10"
