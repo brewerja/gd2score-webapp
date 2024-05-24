@@ -5,6 +5,7 @@ name = "pypi"
 
 [dev-packages]
 python-dotenv = "*"
+ruff = "*"
 
 [packages]
 "gd2score" = {ref = "master", git = "https://github.com/brewerja/gd2score.git", editable = true}
