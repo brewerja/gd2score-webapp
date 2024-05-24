@@ -1,10 +1,9 @@
 import os
-import re
 import urllib
 import datetime
 
 import statsapi
-from flask import render_template, Markup, abort, jsonify, send_from_directory
+from flask import render_template, abort, jsonify, send_from_directory
 from app import app
 
 import gd2score
