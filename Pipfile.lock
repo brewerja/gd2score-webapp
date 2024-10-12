@@ -267,7 +267,7 @@
         "gd2score": {
             "editable": true,
             "git": "https://github.com/brewerja/gd2score.git",
-            "ref": "e92bdf5ee7aa168414ea1ffe4445cbd1a8ebd461"
+            "ref": "cd46aeeb9c51d35aee8424c2463556919651ea3d"
         },
         "gunicorn": {
             "hashes": [
