@@ -1,3 +1,4 @@
+import pytz
 import os
 import urllib
 import datetime
@@ -22,7 +23,7 @@ def lookup_games(d):
 
 @app.route("/")
 def index():
-    d = datetime.datetime.now()
+    d = datetime.datetime.now(pytz.timezone('America/New_York'))
     games = lookup_games(d)
     while not games:
         d = d - datetime.timedelta(days=1)

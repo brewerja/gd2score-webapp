@@ -2,9 +2,9 @@
     <head>
         <title>Scorecard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-		crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+                crossorigin="anonymous"></script>
         <script type="text/javascript" src="/static/helper.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -14,17 +14,17 @@
     </head>
     <body>
         <div id="content">
-        <form data-current-game="{{ current_game }}" data-date="{{ date }}">
-            <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
-            <select id="games">
-                {% for key, value in games.items() %}
-                <option value="{{ key }}">{{ value }}</option>
-                {% endfor %}
-            </select>
-            <button id="refresh-button" title="Refresh Game" hidden type="button"><i class="fas fa-sync-alt"></i></button>
-        </form>
+            <form data-current-game="{{ current_game }}" data-date="{{ date }}">
+                <input class="flatpickr flatpickr-input active" type="text" placeholder="Select Date.." readonly="readonly">
+                <select id="games">
+                    {% for key, value in games.items() %}
+                    <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                </select>
+                <button id="refresh-button" title="Refresh Game" hidden type="button"><i class="fas fa-sync-alt"></i></button>
+            </form>
 
-        <div id="scorecard">{{ svg }}</div>
+            <div id="scorecard">{{ svg }}</div>
         </div>
     </body>
 </html>

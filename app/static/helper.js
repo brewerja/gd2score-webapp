@@ -212,6 +212,7 @@ $(window).on('load', () => {
 
   function initDate() {
     const date = $('form').data('date');
+    console.log(date);
     if (date) datepicker.setDate(date);
   }
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fb22943bdb63cbb299a78ed982c14fa911add39ea8d0f09d657e2d8d729edd7f"
+            "sha256": "7751930fd5d88a00724a10203b77b6147a0dc51e6838aed7b12a3576c64b7860"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -251,11 +251,12 @@
         },
         "flask-compress": {
             "hashes": [
-                "sha256:5d6efe3584c89516c3ab9d94adabe08c218517b957a9bd5cd0c3955dd3834c51",
-                "sha256:b7b66cd5d08fc46bbcc71561e13ca64321590b0ca4c172f8001bf5374f8f5c58"
+                "sha256:1ebb112b129ea7c9e7d6ee6d5cc0d64f226cbc50c4daddf1a58b9bd02253fbd8",
+                "sha256:415131f197c41109f08e8fdfc3a6628d83d81680fb5ecd0b3a97410e02397b20"
             ],
             "index": "pypi",
-            "version": "==1.15"
+            "markers": "python_version >= '3.9'",
+            "version": "==1.17"
         },
         "flask-sslify": {
             "hashes": [
@@ -384,6 +385,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==24.1"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:2aa355083c50a0f93fa581709deac0c9ad65cca8a9e9beac660adcbd493c798a",
+                "sha256:31c7c1817eb7fae7ca4b8c7ee50c72f93aa2dd863de768e1ef4245d426aa0725"
+            ],
+            "index": "pypi",
+            "version": "==2024.2"
         },
         "requests": {
             "hashes": [
