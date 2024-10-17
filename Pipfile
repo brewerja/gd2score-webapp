@@ -14,7 +14,6 @@ flask = "*"
 MLB-statsapi = "*"
 flask-sslify = "*"
 flask-compress = "*"
-pytz = "*"
 
 [requires]
 python_version = "3.11"

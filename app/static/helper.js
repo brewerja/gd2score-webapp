@@ -210,10 +210,24 @@ $(window).on('load', () => {
     return datepicker.element.value;
   }
 
+  function formatDate() {
+    const date = new Date();
+    return date.toLocaleDateString('en-CA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).replace(/\//g, '-');
+  }
+
   function initDate() {
     const date = $('form').data('date');
-    console.log(date);
-    if (date) datepicker.setDate(date);
+    if (date) {
+        datepicker.setDate(date);
+    } else {
+        const dateStr = formatDate();
+        datepicker.setDate(dateStr);
+        setGamesDropdown(dateStr);
+    }
   }
 
   function initGame() {

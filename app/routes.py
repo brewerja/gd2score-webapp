@@ -1,4 +1,3 @@
-import pytz
 import os
 import urllib
 import datetime
@@ -23,13 +22,8 @@ def lookup_games(d):
 
 @app.route("/")
 def index():
-    d = datetime.datetime.now(pytz.timezone('America/New_York'))
-    games = lookup_games(d)
-    while not games:
-        d = d - datetime.timedelta(days=1)
-        games = lookup_games(d)
     return render_template(
-        "index.html", games=games, date="%d-%d-%d" % (d.year, d.month, d.day)
+        "index.html", games={}
     )
 
 
