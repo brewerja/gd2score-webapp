@@ -22,9 +22,7 @@ def lookup_games(d):
 
 @app.route("/")
 def index():
-    return render_template(
-        "index.html", games={}
-    )
+    return render_template("index.html", games={})
 
 
 @app.route("/<string:gid>")
@@ -47,7 +45,7 @@ def get_game(gid=None):
 def svg(gid):
     game = game_builder.build(gid)
     svg = draw_scorecard.draw(game).tostring()
-    return jsonify({"svg": svg, "inProgress": game.in_progress})
+    return jsonify({"svg": svg, "inProgress": game.in_progress, "link": game.link})
 
 
 @app.route("/games/<int:year>-<int:month>-<int:day>")

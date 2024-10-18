@@ -192,6 +192,7 @@ $(window).on('load', () => {
         $('#refresh-button').attr('hidden', true);
       }
       enableForm();
+      console.log(data.link);
     });
   }
 
